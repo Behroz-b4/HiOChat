@@ -1,0 +1,741 @@
+        :root {
+  --bg-color: #1b1b22;
+  --green: #00e5c0;
+  --body-font-family: "Poppins", sans-serif;
+}
+
+/* Configurações globais */
+:root {
+  --bg-color: #1b1b22;
+  --body-font-family: "Poppins", sans-serif;
+}
+.audio-player {
+  --player-color-featured: #007cff;
+  --player-color-background: #2c2c2c;
+  --player-color-text: #666;
+  --player-percent-played: 0;
+  --player-current-time: "00:00";
+
+  display: inline-flex;
+  width: 400px;
+  max-width: 100%;
+  border-radius: 10px;
+  user-select: none;
+  font-family: Arial, sans-serif;
+}
+
+.audio-player + .audio-player {
+  margin-top: 1rem;
+}
+
+.audio-player .player {
+  flex: 1;
+  display: flex;
+}
+
+.audio-player .player .btn-play {
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  padding: 0 0.8rem 0 0.4rem;
+}
+
+.audio-player .player .btn-play:disabled{
+  cursor: default;
+}
+
+.audio-player .player .btn-play span {
+  opacity: 1;
+}
+.pl2on {
+    fill: #2c2c2c;
+    height: 24px;
+    width: 24px;
+}
+
+.audio-player .player .btn-play span:not(.icon-play),
+.audio-player.playing .player .btn-play span:not(.icon-pause),
+.audio-player.loading .player .btn-play span:not(.icon-loop){
+  display: none;
+}
+
+.audio-player.playing .player .btn-play .icon-pause {
+  display: inline-block;
+}
+
+@keyframes load{
+  to{
+    transform: rotate(360deg);
+  }
+}
+
+.audio-player.loading .player .btn-play{
+  pointer-events: none;
+}
+
+.audio-player.loading .player .btn-play span{
+  animation: load 1s linear infinite;
+}
+
+.audio-player.loading .player .btn-play .icon-loop {
+  display: inline-block;
+}
+
+.audio-player .player .timeline {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 0.2rem;
+}
+
+.audio-player .player .timeline .line {
+  --line-height: 0.24rem;
+
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.audio-player .player .timeline .line:before {
+  content: "";
+  width: var(--player-percent-played);
+  position: absolute;
+  background: var(--player-color-featured);
+  height: var(--line-height);
+  border-radius: calc(var(--line-height) / 2);
+}
+
+.audio-player .player .timeline .line input[type="range"] {
+  flex: 1;
+  all: unset;
+  appearance: none;
+  background: #007cff59;
+  border: none;
+  outline: none;
+  width: 100%;
+  position: relative;
+  border-radius: 50px;
+}
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  background: var(--player-color-featured);
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  margin-top: calc(var(--line-height) * -1.4);
+}
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-moz-range-thumb {
+  all: unset;
+  appearance: none;
+  border: 0;
+  background: var(--player-color-featured);
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  margin-top: calc(var(--line-height) * -1.4);
+}
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-ms-thumb {
+  appearance: none;
+  background: var(--player-color-featured);
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+  margin-top: calc(var(--line-height) * -1.4);
+}
+
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-webkit-slider-runnable-track {
+  background: rgba(255, 255, 255, 0.2);
+  height: var(--line-height);
+  border-radius: calc(var(--line-height) / 2);
+}
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-moz-range-track {
+  background: rgba(255, 255, 255, 0.2);
+  height: var(--line-height);
+  border-radius: calc(var(--line-height) / 2);
+}
+
+.audio-player
+  .player
+  .timeline
+  .line
+  input[type="range"]::-ms-track {
+  background: rgba(255, 255, 255, 0.2);
+  height: var(--line-height);
+  border-radius: calc(var(--line-height) / 2);
+}
+
+.audio-player .player .timeline .data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: var(--player-color-text);
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+
+.audio-player .player .timeline .data .current-time::before {
+  content: var(--player-current-time);
+}
+
+.audio-player .player .timeline .data .time {
+  display: flex;
+  align-items: center;
+}
+
+.audio-player .player .timeline .data .time span {
+  font-size: 1rem;
+  margin-left: 0.4rem;
+  color: var(--player-color-featured);
+}
+
+.audio-player .user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  position: relative;
+  width: 55px;
+  height: 55px;
+  margin-left: 10px;
+}
+
+.audio-player .user img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.audio-player .user span {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: var(--player-color-featured);
+  transform: translateX(0%);
+  font-size: 22px;
+  text-shadow: -1px -1px 0 var(--player-color-background),
+    1px -1px 0 var(--player-color-background),
+    -1px 1px 0 var(--player-color-background),
+    1px 1px 0 var(--player-color-background);
+}
+
+/* Áudio enviado */
+.audio-player.mine {
+  --player-color-background: #056162;
+}
+
+.audio-player.mine .user {
+  margin-left: 0;
+}
+
+.audio-player.mine .player {
+  margin-right: 0.8rem;
+}
+
+.audio-player.mine .player .btn-play{
+  padding: 0 0.8rem;
+}
+
+.audio-player.mine .user span {
+  right: 0;
+  left: auto;
+  transform: translateX(50%);
+}
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            overflow: auto;
+            scrollbar-color: #fff #00000000;
+            scrollbar-width: thin;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f0f2f5;
+            max-width: 100%;
+        }
+
+        button, p, h1, h2, h3, h4, h5, h6, div, input, span {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .au1al {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .au1nt {
+            background: white;
+            width: 100%;
+            max-width: 400px;
+            border-radius: 9px;
+            padding: 2rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .au1rm {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 28px;
+        }
+
+        .au1rm input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .au1rm button {
+            padding: 10px;
+            background: #3fc5ff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+            margin: 10px;
+        }
+
+        .au1rm button:hover { background: #007cff; }
+
+        .auth-toggle {
+            text-align: center;
+            margin-top: 1rem;
+            color: #000;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .si1ng { color: #3fc5ff; }
+
+        .hidden { display: none; }
+
+        .container { display: flex; height: 100vh; }
+
+        .us1st {
+            width: 300px;
+            background: white;
+            padding: 10px;
+            border-right: 1px solid #e4e6eb;
+            overflow-y: auto;
+        }
+
+        .uiem1 {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s;
+            gap: 10px;
+        }
+
+        .uiem1:hover { background: #f8f9fa; }
+
+        .us1ar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .us1ar-m {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .ch1er { flex: 1; display: flex; flex-direction: column; }
+
+        .header {
+            padding: 10px;
+            background: white;
+            border-bottom: 1px solid #e4e6eb;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+        }
+
+        .me1on {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: linear-gradient(to Top, #007cff, #3fc5ff);
+        }
+
+        .message { display: flex; }
+
+        .me1nt {
+            max-width: 70%;
+            padding: 6px 6px 0 6px;
+            background: white;
+            box-shadow: 4px 2px 4px 0 rgba(0, 0, 0, 0.04);
+            margin: 3px 0;
+        }
+
+        .message.user .me1nt {
+            background: #82d9ff;
+            color: black;
+            margin-left: auto;
+        }
+
+        .me1fo {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .me1me {
+            font-size: 10px;
+            color: #666;
+            margin-left: auto;
+            margin-top: 5px;
+        }
+
+        .message.user .me1nt { border-radius: 14px 0 14px 14px; }
+
+        .message .me1nt { border-radius: 0 14px 14px 14px; }
+
+        .message.sm1::before {
+            content: "";
+            width: 0;
+            height: 0;
+            border-bottom: 10px solid transparent;
+            border-right: 10px solid #fff;
+            margin-top: 3px;
+        }
+
+        .message.user::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-bottom: 10px solid transparent;
+            border-left: 10px solid #82d9ff;
+            margin-top: 3px;
+            right: 0;
+            top: 0;
+        }
+
+        .in1ea {
+		padding: 4px 7px 7px 7px;
+		background: #007cff;
+		display: flex;
+		gap: 0.5rem;
+	}
+
+        .me1ut {
+            flex: 1;
+            border: 0;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .se1on {
+            background: #3fc5ff;
+            color: black;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            height: 50px;
+            width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .se1on:hover { background: #007cff; border: 2px solid #fff; }
+
+        .material-icons { font-size: 16px; color: #007cff; }
+
+        .f1u2b:hover { background: #007cff; }
+
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .us1st {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 75%;
+                height: 100vh;
+                z-index: 100;
+                transition: 0.3s;
+                background: white;
+                box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            }
+            .us1st.active { left: 0; }
+            .me1on { display: block; }
+            .header { position: sticky; top: 0; z-index: 99; }
+            .messages { flex: 1; padding: 1rem; overflow-y: auto; background: linear-gradient(to top, #007cff, #3fc5ff); }
+        }
+
+        .me1us {
+            display: flex;
+            justify-content: flex-end;
+            gap: 4px;
+            margin-top: 5px;
+            font-size: 0.7rem;
+            color: #666;
+        }
+
+        .message.user .me1us { color: rgba(255, 255, 255, 0.7); }
+
+        .status-icon { font-size: 0.8rem; }
+
+        .f1u2b {
+            cursor: pointer;
+            background: #000;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            transition: all 0.3s ease;
+        }
+
+        .f1u2bon {
+            height: 20px;
+            width: 20px;
+            fill: #fff;
+        }
+
+        .me1ge {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 10px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) { .me1ge { width: 100%; } }
+
+        .fu1ay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            cursor: pointer;
+        }
+
+        .sm1oo { font-size: 12px; color: #666; }
+
+        .fu1ge {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .me1ge { cursor: zoom-in; }
+
+        .lo1on {
+            background: #82d9ff;
+            height: 40px;
+            width: 80px;
+            border: 0;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            margin-left: auto;
+        }
+
+        .lo1on svg { height: 14px; width: 14px; transition: all 0.3s ease; }
+
+        .lo1on:hover svg { height: 14px; width: 14px; fill: #fff; }
+
+        .lo1on:hover { background: #007cff; color: #fff; }
+
+        .ch1le { display: flex; gap: 6px; border-radius: 50px; padding: 6px 6px 6px 14px; flex: 1; height: 50px; justify-content: center; align-items: center; background: #fff; }
+
+        .me1er { background: white; }
+
+        .ver-t { font-size: 11px; margin-top: 16px; color: #666; margin-left: 2px; }
+
+        .fi1ge { margin-top: 8px; }
+
+        .fi1nk {
+            color: #000;
+            text-decoration: none;
+            display: block;
+            align-items: center;
+            padding: 10px 10px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: #ffffff55;
+            gap: 4px;
+            width: 100%;
+        }
+
+        .fmi1 img { height: 50px; width: 50px; }
+
+        .da1or { text-align: center; margin: 1.5rem 0; position: relative; }
+
+        .da1or span {
+            background: #fff;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #666;
+            display: inline-block;
+            font-weight: 500;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .he1os { height: 35px; margin-top: 10px; }
+
+        .pr1ew { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 2px solid #ddd; }
+
+        .pr1ad { cursor: pointer; background: #000; border-radius: 50px; display: flex; align-items: center; justify-content: center; height: 40px; transition: all 0.3s ease; color: #fff; font-size: 16px; gap: 4px; }
+
+        .pr1iv { display: flex; align-items: center; justify-content: center; }
+
+        .vi1ck { width: 100%; max-width: 400px; border-radius: 10px; height: auto; display: block; }
+
+        .vc1pb { position: relative; display: flex; align-items: center; justify-content: center; }
+
+        .vcpb svg { width: 100%; height: 100%; }
+
+        .vcpb { display: flex; align-items: center; justify-content: center; position: absolute; width: 50px; height: 50px; border: none; cursor: pointer; transition: transform 0.3s ease; }
+
+        .vcpb:hover { transform: scale(1.1); }
+
+        .vc1pbc:hover .vcpb { transform: scale(1.1); }
+
+        .vi1ay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgb(255 255 255 / 90%); z-index: 999; }
+
+        .vi1er { position: relative; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80%; max-width: 800px; background-color: #000; border-radius: 10px; padding: 10px; }
+
+        #popupVideo { width: 100%; height: auto; border-radius: 10px; }
+
+        .us1me { font-weight: 600; color: #007cff; font-family: sans-serif; font-size: 14px; }
+
+        .fmi1 { display: flex; justify-content: center; }
+
+        /* Voice Recording Styles */
+        #recordButton {
+            background: #3fc5ff;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #recordButton.recording {
+            background: #ff4444;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        #recordingIndicator {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        #recordingIndicator.visible { display: flex; }
+
+        audio::-webkit-media-controls-panel { background-color: #ffffff; }
+
+        audio::-webkit-media-controls-play-button,
+        audio::-webkit-media-controls-mute-button { filter: invert(1); }
